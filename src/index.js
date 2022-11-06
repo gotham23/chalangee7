@@ -1,13 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
-import App from './App';
+import { Cari, LandingPage, Login } from './pages';
+
 import reportWebVitals from './reportWebVitals';
+import { createStore, compose, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
+
+const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<LandingPage />}></Route>
+          {/* <Route path="/" element={<Login />} /> */}
+          <Route path="/home" element={<Cari />} />
+        </Routes>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
